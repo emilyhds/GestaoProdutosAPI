@@ -45,11 +45,11 @@ public class Produto {
     @Column(nullable = false)
     private String medida;
 
-    @ManyToOne
+    @ManyToOne ( cascade = CascadeType.PERSIST ) //Permite cadastrar um novo fabricante a partir de um produto
     @JoinColumn ( nullable = false )
     private Fabricante fabricante;
 
-    @ManyToOne
+    @ManyToOne ( cascade = CascadeType.PERSIST )
     @JoinColumn ( nullable = false )
     private Categoria categoria;
 
