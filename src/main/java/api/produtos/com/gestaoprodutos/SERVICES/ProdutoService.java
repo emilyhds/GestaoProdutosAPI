@@ -7,6 +7,8 @@ import api.produtos.com.gestaoprodutos.MODELS.DTO.REQUEST.ProdutoRequestDTO;
 import api.produtos.com.gestaoprodutos.MODELS.ENTITY.Produto;
 import api.produtos.com.gestaoprodutos.REPOSITORY.ProdutoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,15 +45,9 @@ public class ProdutoService {
         throw new NenhumElementoEncontradoException("Nenhum produto foi encontrado com o id informado");
     }
 
-    public List<Produto> listarProdutos (){
-
-        List<Produto> produtos = repository.findAll();
-
-        if ( produtos.isEmpty() ){
-            throw new NenhumElementoEncontradoException( "Nenhum produto foi localizado no banco de dados" );
-        }
-
-        return produtos;
+    public Page<Produto> listarProdutos (Pageable pageable){
+        
+        return repository.findAll(pageable);
 
     }
 

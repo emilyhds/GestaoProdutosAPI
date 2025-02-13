@@ -8,8 +8,6 @@ import api.produtos.com.gestaoprodutos.MODELS.ENTITY.Produto;
 import api.produtos.com.gestaoprodutos.SERVICES.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,11 +73,11 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Produto>> listarProdutos ( Pageable pageable ){
+    public ResponseEntity<List<Produto>> listarProdutos (  ){
 
         try {
 
-            Page<Produto> produtos = service.listarProdutos( pageable );
+            List<Produto> produtos = service.listarProdutos();
             return new ResponseEntity<>( produtos, HttpStatus.OK );
 
         } catch ( NenhumElementoEncontradoException e ){
