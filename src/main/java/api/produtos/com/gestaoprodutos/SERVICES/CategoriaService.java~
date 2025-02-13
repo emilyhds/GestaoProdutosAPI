@@ -1,9 +1,7 @@
 package api.produtos.com.gestaoprodutos.SERVICES;
 
 import api.produtos.com.gestaoprodutos.EXCEPTION.AtributosInvalidosException;
-import api.produtos.com.gestaoprodutos.EXCEPTION.DadosDuplicadosException;
 import api.produtos.com.gestaoprodutos.EXCEPTION.NenhumElementoEncontradoException;
-import api.produtos.com.gestaoprodutos.MODELS.DTO.REQUEST.CategoriaPostRequestDTO;
 import api.produtos.com.gestaoprodutos.MODELS.ENTITY.Categoria;
 import api.produtos.com.gestaoprodutos.REPOSITORY.CategoriaRepository;
 import lombok.AllArgsConstructor;
@@ -18,14 +16,10 @@ public class CategoriaService {
 
     private CategoriaRepository repository;
 
-    public Categoria criarCategoria ( CategoriaPostRequestDTO categoriaPostRequestDTO){
-
-        Categoria categoria = categoriaPostRequestDTO.converter();
+    public Categoria criarCategoria ( Categoria categoria ){
 
         if (categoria.getNome().isEmpty() || categoria.getNome().isBlank() ){
             throw new AtributosInvalidosException( "O nome da categoria não pode ser vazio! " );
-        } else if ( repository.existsByNome( categoria.getNome() ) ){
-            throw new DadosDuplicadosException("Já existe uma categoria com esse nome");
         }
 
         return repository.save( categoria );
@@ -59,9 +53,7 @@ public class CategoriaService {
 
         if ( repository.existsById( id ) ){
             categoria.setId( id );
-            return repository.save( categoria );
-        } else if ( repository.existsByNome( categoria.getNome() ) ){
-            throw new DadosDuplicadosException("Já existe uma categoria com esse nome");
+            return criarCategoria( categoria );
         }
 
         throw new NenhumElementoEncontradoException("A categoria a ser atualizada não foi localizada");

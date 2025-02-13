@@ -2,7 +2,7 @@ package api.produtos.com.gestaoprodutos.CONTROLLER;
 
 import api.produtos.com.gestaoprodutos.EXCEPTION.AtributosInvalidosException;
 import api.produtos.com.gestaoprodutos.EXCEPTION.NenhumElementoEncontradoException;
-import api.produtos.com.gestaoprodutos.MODELS.DTO.REQUEST.CategoriaRequestDTO;
+import api.produtos.com.gestaoprodutos.MODELS.DTO.REQUEST.CategoriaPostRequestDTO;
 import api.produtos.com.gestaoprodutos.MODELS.ENTITY.Categoria;
 import api.produtos.com.gestaoprodutos.SERVICES.CategoriaService;
 import jakarta.validation.Valid;
@@ -21,11 +21,11 @@ public class CategoriaController {
     private CategoriaService service;
 
     @PostMapping
-    public ResponseEntity<Categoria> criarCategoria (@RequestBody @Valid CategoriaRequestDTO categoria ){
+    public ResponseEntity<Categoria> criarCategoria (@RequestBody @Valid CategoriaPostRequestDTO categoriaPostRequestDTO){
 
         try {
 
-            categoria = service.criarCategoria( categoria );
+            Categoria categoria = service.criarCategoria(categoriaPostRequestDTO);
             return new ResponseEntity<>( categoria, HttpStatus.OK );
 
         } catch ( AtributosInvalidosException e ){
