@@ -77,11 +77,10 @@ public class ProdutoController {
     }
 
     @GetMapping("/categoria/{id}")
-    public ResponseEntity<Page<Produto>> buscarProdutosPorCategoria ( @PathVariable Integer id ){
+    public ResponseEntity<Page<Produto>> buscarProdutosPorCategoria ( @PageableDefault ( page = 0, size = 15, sort = "nome", direction = Sort.Direction.ASC ) Pageable pageable, @PathVariable Integer id ){
 
         try {
-
-            Page<Produto> produtos = service.buscarProdutosPorCategoria( id );
+            Page<Produto> produtos = service.buscarProdutosPorCategoria( pageable, id );
             return new ResponseEntity<>( produtos, HttpStatus.OK );
 
         } catch ( NenhumElementoEncontradoException e ){
