@@ -1,0 +1,18 @@
+package api.produtos.com.gestaoprodutos.CONTROLLER;
+
+import api.produtos.com.gestaoprodutos.MODELS.DTO.RESPONSE.ErrorResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
+import java.time.Instant;
+import java.util.NoSuchElementException;
+
+@ControllerAdvice
+public class ExceptionHandlerController {
+
+    public ResponseEntity<ErrorResponseDTO> handleNoSuchElementException (NoSuchElementException e ) {
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO( e.getMessage(), Instant.now() );
+        return new ResponseEntity<>( errorResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR );
+    }
+}
