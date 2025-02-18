@@ -4,6 +4,7 @@ import api.produtos.com.gestaoprodutos.EXCEPTION.AtributosInvalidosException;
 import api.produtos.com.gestaoprodutos.EXCEPTION.DadosDuplicadosException;
 import api.produtos.com.gestaoprodutos.EXCEPTION.NenhumElementoEncontradoException;
 import api.produtos.com.gestaoprodutos.MODELS.DTO.REQUEST.ProdutoRequestDTO;
+import api.produtos.com.gestaoprodutos.MODELS.ENTITY.Categoria;
 import api.produtos.com.gestaoprodutos.MODELS.ENTITY.Produto;
 import api.produtos.com.gestaoprodutos.REPOSITORY.ProdutoRepository;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class ProdutoService {
 
     private ProdutoRepository repository;
+    private CategoriaService categoriaService;
 
     public Produto criarProduto ( ProdutoRequestDTO produtoDTO ){
 
@@ -80,4 +82,8 @@ public class ProdutoService {
 
     }
 
+    public Page<Produto> buscarProdutosPorCategoria(Pageable pageable, Integer id) {
+        Categoria categoria = categoriaService.buscarCategoriaPorId( id );
+        return repository.findByCategoria( pageable, categoria );
+    }
 }

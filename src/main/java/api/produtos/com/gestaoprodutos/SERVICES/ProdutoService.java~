@@ -46,7 +46,7 @@ public class ProdutoService {
     }
 
     public Page<Produto> listarProdutos (Pageable pageable){
-
+        
         return repository.findAll(pageable);
 
     }
